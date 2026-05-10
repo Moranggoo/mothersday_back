@@ -40,4 +40,10 @@ public class CupomController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PatchMapping("/resgatar/{id}")
+    public ResponseEntity<Void> resgatar(@PathVariable Long id) {
+        service.resgatarService(id);
+        return ResponseEntity.ok().build();
+    }
 }

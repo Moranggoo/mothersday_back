@@ -1,5 +1,6 @@
 package com.mothersday.mothersday.service;
 import com.mothersday.mothersday.entity.Cupom;
+import com.mothersday.mothersday.enums.Status;
 import com.mothersday.mothersday.repository.CupomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,9 +37,19 @@ public class CupomService {
         Cupom cupom = repository.findById(id).orElse(null);
 
         if (cupom != null) {
+            repository.deleteById(id);
+        }
+    }
+
+    public void resgatarService(Long id) {
+        Cupom cupom = repository.findById(id).orElse(null);
+
+        if (cupom != null) {
+            cupom.setStatus(Status.RESGATADO);
+
             enviarNotificacaoTelegram(cupom.getTitulo());
 
-            repository.deleteById(id);
+            repository.save(cupom);
         }
     }
 
